@@ -1,10 +1,22 @@
 import Image from 'next/image'
 import formatPrice from '@/util/PriceFormat'
 import { ProductType } from '@/types/ProductType'
+import Link from 'next/link'
 
-export default function Product({ name, image, price }: ProductType) {
+export default function Product({
+  name,
+  image,
+  price,
+  id,
+  description,
+}: ProductType) {
   return (
-    <div className='flex-col justify-center'>
+    <Link
+      href={{
+        pathname: `/product/${id}`,
+        query: { name, image, price, id, description },
+      }}
+    >
       <div className='text-gray-700'>
         <Image
           src={image}
@@ -20,6 +32,6 @@ export default function Product({ name, image, price }: ProductType) {
           </h2>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
