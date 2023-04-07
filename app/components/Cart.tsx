@@ -5,21 +5,31 @@ import { useCartStore } from '@/store'
 import formatPrice from '@/util/PriceFormat'
 import { IoAddCircle, IoRemoveCircle } from 'react-icons/io5'
 import basket from '@/public/shopping-basket-2.png'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Cart() {
   const cartStore = useCartStore()
+
+  // Total price of all items in cart
+  const totalPrice = cartStore.cart.reduce((acc, item) => {
+    return acc + item.price * item.quantity
+  }, 0)
+
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       onClick={() => cartStore.toggleCart()}
       className='fixed w-full h-screen left-0 top-0 bg-black/25'
     >
-      <div
+      <motion.div
         onClick={(e) => e.stopPropagation()}
         className='bg-white absolute right-0 top-0 w-1/4 h-screen p-12 overflow-y-auto text-gray-700'
       >
-        <h1>Here is yoiur shopping list </h1>
+        <h1>Here is your shopping list 🗒️</h1>
         {cartStore.cart.map((item) => (
-          <div className='flex gap-4 py-4'>
+          <motion.div layout key={item.id} className='flex gap-4 py-4'>
             <Image
               src={item.image}
               alt={item.name}
@@ -27,7 +37,7 @@ export default function Cart() {
               height={100}
               className='rounded-md h-24'
             />
-            <div>
+            <motion.div layout>
               <h2>{item.name}</h2>
               <div className='flex gap-2'>
                 <h2>Quantity: {item.quantity}</h2>
@@ -59,21 +69,34 @@ export default function Cart() {
                 </button>
               </div>
               <p className='text-sm'>{formatPrice(item.price)}</p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         ))}
+        {/** Total price */}
         {cartStore.cart.length > 0 && (
-          <button className='py-2 mt-4 bg-teal-700 w-full rounded-md text-white'>
-            CheckOut
-          </button>
+          <motion.div layout>
+            <p>Total Price:{formatPrice(totalPrice)}</p>
+            <button className='py-2 mt-4 bg-teal-700 w-full rounded-md text-white'>
+              CheckOut
+            </button>
+          </motion.div>
         )}
-        {!cartStore.cart.length && (
-          <div className='flex flex-col items-center gap-12 text-2xl font-medium pt-56 opacity-75'>
-            <h1>There is nothing in your cart 😢</h1>
-            <Image src={basket} alt='empty cart' width={200} height={200} />
-          </div>
-        )}
-      </div>
-    </div>
+
+        <AnimatePresence>
+          {!cartStore.cart.length && (
+            <motion.div
+              layout
+              animate={{ scale: 1, rotateZ: 0, opacity: 0.75 }}
+              initial={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+              exit={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+              className='flex flex-col items-center gap-12 text-2xl font-medium pt-56 opacity-75'
+            >
+              <h1>There is nothing in your cart 😢</h1>
+              <Image src={basket} alt='empty cart' width={200} height={200} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
   )
 }
