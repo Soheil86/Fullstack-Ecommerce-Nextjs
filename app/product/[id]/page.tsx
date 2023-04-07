@@ -1,5 +1,6 @@
+import AddCart from '@/app/components/AddCart'
 import formatPrice from '@/util/PriceFormat'
-import { SearchParamTypes } from '@/util/SearchParamTypes'
+import { SearchParamTypes } from '@/types/SearchParamTypes'
 import Image from 'next/image'
 
 export default function ProductPage({ searchParams }: SearchParamTypes) {
@@ -22,9 +23,7 @@ export default function ProductPage({ searchParams }: SearchParamTypes) {
             {searchParams.price && formatPrice(searchParams.price)}
           </p>
         </div>
-        <button className='my-12 text-white p-4 font-medium rounded-md bg-teal-700'>
-          Add to Cart
-        </button>
+        <AddCart {...searchParams} />
       </div>
     </div>
   )
