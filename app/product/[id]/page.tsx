@@ -5,9 +5,9 @@ import Image from 'next/image'
 
 export default function ProductPage({ searchParams }: SearchParamTypes) {
   return (
-    <div className='flex justify-between gap-24 p-12 text-gray-700'>
+    <div className='flex flex-col 2xl:flex-row items-center justify-between gap-24 text-gray-700'>
       <Image
-        className='rounded-lg object-cover'
+        className='rounded-lg object-cover w-full'
         src={searchParams.image}
         alt={searchParams.name}
         width={350}

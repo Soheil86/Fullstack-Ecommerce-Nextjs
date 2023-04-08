@@ -1,13 +1,14 @@
-import NextAuth from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 import Stripe from 'stripe'
 
 const prisma = new PrismaClient()
+const adapter = PrismaAdapter(prisma)
 
-export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+export const authOptions: NextAuthOptions = {
+  adapter: adapter,
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -23,8 +24,8 @@ export const authOptions = {
       // Create a customer in Stripe if the user has an email address
       if (user.name && user.email) {
         const customer = await stripe.customers.create({
-          email: user.email,
-          name: user.name,
+          email: user.email || undefined,
+          name: user.name || undefined,
         })
         // Also update the user in the database with the Stripe customer ID
         await prisma.user.update({
@@ -36,6 +37,12 @@ export const authOptions = {
           },
         })
       }
+    },
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user = user
+      return session
     },
   },
 }
