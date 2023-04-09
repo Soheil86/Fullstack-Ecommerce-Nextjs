@@ -2,6 +2,7 @@
 
 import { useCartStore } from '@/store'
 import { AddCartType } from '@/types/AddCartType'
+import { useState } from 'react'
 
 export default function AddCart({
   name,
@@ -11,12 +12,24 @@ export default function AddCart({
   price,
 }: AddCartType) {
   const cartStore = useCartStore()
+
+  const [added, setAdded] = useState(false)
+
+  const handleAddToCart = () => {
+    cartStore.addProduct({ name, id, image, quantity, price })
+    setAdded(true)
+    setTimeout(() => {
+      setAdded(false)
+    }, 2000)
+  }
+
   return (
     <button
-      onClick={() => cartStore.addProduct({ name, id, image, quantity, price })}
-      className='bg-teal-600 text-white py-2 px-6 rounded-md my-12'
+      onClick={handleAddToCart}
+      disabled={added}
+      className='my-4 btn btn-primary w-full'
     >
-      Add to Cart
+      {!added ? 'Add to cart' : 'Added to cart 😊'}
     </button>
   )
 }

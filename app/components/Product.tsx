@@ -17,7 +17,7 @@ export default function Product({
         query: { name, image, price, id, description },
       }}
     >
-      <div className='text-gray-700'>
+      <div>
         <Image
           src={image}
           alt={name}
@@ -27,7 +27,7 @@ export default function Product({
         />
         <div className='font-medium py-2'>
           <h1>{name}</h1>
-          <h2 className='text-sm text-teal-700'>
+          <h2 className='text-sm text-primary'>
             {price && formatPrice(price)}
           </h2>
         </div>

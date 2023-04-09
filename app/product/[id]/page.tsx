@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function ProductPage({ searchParams }: SearchParamTypes) {
   return (
-    <div className='flex flex-col 2xl:flex-row items-center justify-between gap-24 text-gray-700'>
+    <div className='flex flex-col 2xl:flex-row items-center justify-between gap-24'>
       <Image
         className='rounded-lg object-cover w-full'
         src={searchParams.image}
@@ -18,7 +18,7 @@ export default function ProductPage({ searchParams }: SearchParamTypes) {
         <p className='py-2'>{searchParams.description}</p>
 
         <div className='flex gap-2'>
-          <p className='text-sm text-teal-700 font-bold'>
+          <p className='text-sm font-bold text-primary'>
             Price:
             {searchParams.price && formatPrice(searchParams.price)}
           </p>
