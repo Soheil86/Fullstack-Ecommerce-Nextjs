@@ -35,7 +35,7 @@ export default function Nav({ user }: Session) {
             )}
           </AnimatePresence>
         </li>
-
+        <DarkLight />
         {!user && (
           <li className='bg-primary text-white py-2 px-4 rounded-md'>
             <button onClick={() => signIn()}>Sign In</button>
