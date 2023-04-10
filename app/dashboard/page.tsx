@@ -64,10 +64,12 @@ export default async function Dashboard() {
                   <h2>{product.name}</h2>
                   <div className='flex items-center gap-4'>
                     <Image
+                      className='w-auto'
                       src={product.image!}
                       width={36}
                       height={36}
                       alt={product.name}
+                      priority={true}
                     />
                     <p>{formatPrice(product.price)}</p>
                     <p>Quantity: {product.quantity}</p>

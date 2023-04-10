@@ -1,5 +1,5 @@
 import Stripe from 'stripe'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/util/prisma'
 import { buffer } from 'micro'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -12,8 +12,6 @@ export const config = {
     bodyParser: false,
   },
 }
-
-const prisma = new PrismaClient()
 
 export default async function handler(
   req: NextApiRequest,

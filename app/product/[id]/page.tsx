@@ -5,13 +5,14 @@ import Image from 'next/image'
 
 export default function ProductPage({ searchParams }: SearchParamTypes) {
   return (
-    <div className='flex flex-col 2xl:flex-row items-center justify-between gap-24'>
+    <div className='flex flex-col 2xl:flex-row items-center justify-between gap-16'>
       <Image
-        className='rounded-lg object-cover w-full'
+        className='rounded-lg w-full'
         src={searchParams.image}
         alt={searchParams.name}
         width={350}
         height={350}
+        priority={true}
       ></Image>
       <div>
         <h1 className='text-2xl font-medium py-2'>{searchParams.name}</h1>
