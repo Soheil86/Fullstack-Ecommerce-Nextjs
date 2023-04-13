@@ -4,10 +4,11 @@ type Params = {
 
 type SearchParams = {
   name: string
-  price: number | null
+  unit_amount: number | null
   image: string
   id: string
-  description: string
+  description: string | null
+  features: string
 }
 
 export type SearchParamTypes = {

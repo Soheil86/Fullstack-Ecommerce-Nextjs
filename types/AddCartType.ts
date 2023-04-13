@@ -1,7 +1,7 @@
 export type AddCartType = {
-  id: string
   name: string
-  price: number
-  quantity: number | 1
   image: string
+  id: string
+  quantity?: number | 1
+  unit_amount: number | null
 }
